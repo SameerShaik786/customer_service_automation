@@ -1,19 +1,16 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker,declarative_base
 
-
-DATABASE_URL = "postgresql://neondb_owner:npg_UyKwaxu2ocD1@ep-long-frog-aty905vu-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-
-engine = create_engine(
-    DATABASE_URL
-)
+engine = create_engine("postgresql://neondb_owner:npg_UyKwaxu2ocD1@ep-long-frog-aty905vu-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",echo= True)
 
 SessionLocal = sessionmaker(
-    bind=engine
+    autocommit = False,
+    autoflush= False,
+    bind = engine
 )
 
-Base = declarative_base()
 
+Base = declarative_base()
 
 
 def get_db():
@@ -24,4 +21,4 @@ def get_db():
         yield db
 
     finally:
-        db.close()  
+        db.close()
